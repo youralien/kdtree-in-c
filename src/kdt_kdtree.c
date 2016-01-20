@@ -83,11 +83,20 @@ kdt_kdtree_test (bool verbose)
 {
     printf (" * kdt_kdtree: ");
     //  @selftest
+
+    // Constructors
     kdt_kdtree_t *kdtree = kdt_kdtree_new ();
+
+    //  Getter and Setters for dimension == 3
     kdt_kdtree_set_dimension (kdtree, 3);
     assert ( kdt_kdtree_dimension (kdtree) == 3 );
+
+    //  Is tree empty as initialization?
     assert ( kdt_kdtree_empty (kdtree) );
+
+    //  Destructors
     kdt_kdtree_destroy (&kdtree);
+
     //  @end
     printf ("OK\n");
 }
