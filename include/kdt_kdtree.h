@@ -34,6 +34,10 @@ const int
 void
     kdt_kdtree_set_dimension (kdt_kdtree_t *self, const int dimension);
 
+// determine if tree is empty
+bool
+    kdt_kdtree_empty (kdt_kdtree_t *self);
+
 //  Self test of this class
 void
     kdt_kdtree_test (bool verbose);

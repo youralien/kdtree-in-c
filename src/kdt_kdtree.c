@@ -23,6 +23,7 @@
 
 struct _kdt_kdtree_t {
    int dimension;
+   kdt_node_t *root;
 };
 
 // --------------------------------------------------------------------------
@@ -67,6 +68,14 @@ kdt_kdtree_set_dimension (kdt_kdtree_t *self, const int dimension) {
 }
 
 // --------------------------------------------------------------------------
+// determine if tree is empty
+bool
+kdt_kdtree_empty (kdt_kdtree_t *self) {
+    assert (self);
+    return !self->root;
+}
+
+// --------------------------------------------------------------------------
 // Self test of this class
 
 void
@@ -77,6 +86,7 @@ kdt_kdtree_test (bool verbose)
     kdt_kdtree_t *kdtree = kdt_kdtree_new ();
     kdt_kdtree_set_dimension (kdtree, 3);
     assert ( kdt_kdtree_dimension (kdtree) == 3 );
+    assert ( kdt_kdtree_empty (kdtree) );
     kdt_kdtree_destroy (&kdtree);
     //  @end
     printf ("OK\n");
