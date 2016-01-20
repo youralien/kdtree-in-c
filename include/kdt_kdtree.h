@@ -1,5 +1,5 @@
 /*  =========================================================================
-    gdom_server - Global Domination service
+    kdt_kdtree - kdtree header file
 
     Copyright (c) the Contributors as noted in the AUTHORS file.
     This file is part of the Global Domination Project.
