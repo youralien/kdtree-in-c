@@ -26,6 +26,22 @@ kdt_node_t *
 void
     kdt_node_destroy (kdt_node_t **self_p);
 
+// Get point
+zlist_t *
+    kdt_node_point (kdt_node_t *self);
+
+// Set point
+void
+    kdt_node_set_point (kdt_node_t *self, zlist_t *point);
+
+// Get value
+const int
+    kdt_node_value (kdt_node_t *self);
+
+// Set value
+void
+    kdt_node_set_value (kdt_node_t *self, const int value);
+
 // Get left child
 kdt_node_t *
     kdt_node_left (kdt_node_t *self);
