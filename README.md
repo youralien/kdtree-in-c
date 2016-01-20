@@ -58,3 +58,6 @@ It might fail one more time because of permission errors.  We can use the brutal
     sudo chmod -R a+w *
     cd $HOME/apps/libsodium
     make install
+
+#Testing
+To compile the files and run the tests, run the bash script `build.sh`, i.e. `./build.sh`
