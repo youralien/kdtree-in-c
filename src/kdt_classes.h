@@ -13,9 +13,6 @@
 #ifndef KDT_CLASSES_H_INCLUDED
 #define KDT_CLASSES_H_INCLUDED
 
-// Platform definitions?
-/* #include "platform.h" */
-
 // Opaque Class Structures to allow forward references
 typedef struct _kdt_node_t kdt_node_t;
 
