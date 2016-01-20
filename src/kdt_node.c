@@ -24,8 +24,8 @@
 struct _kdt_node_t {
     zlist_t *point;
     int value;
-    kdt_node_t *left_child;
-    kdt_node_t *right_child;
+    kdt_node_t *left;
+    kdt_node_t *right;
 };
 
 // --------------------------------------------------------------------------
@@ -52,6 +52,40 @@ kdt_node_destroy (kdt_node_t **self_p) {
 }
 
 // --------------------------------------------------------------------------
+// Get left child
+kdt_node_t *
+kdt_node_left (kdt_node_t *self) {
+    assert (self);
+    return self->left;
+}
+
+// --------------------------------------------------------------------------
+// Set left child
+void
+kdt_node_set_left (kdt_node_t *self, kdt_node_t *left) {
+    assert (self);
+    assert (left);
+    self->left = left;
+}
+
+// --------------------------------------------------------------------------
+// Get right child
+kdt_node_t *
+kdt_node_right (kdt_node_t *self) {
+    assert (self);
+    return self->right;
+}
+
+// --------------------------------------------------------------------------
+// Set right child
+void
+kdt_node_set_right (kdt_node_t *self, kdt_node_t *right) {
+    assert (self);
+    assert (right);
+    self->right = right;
+}
+
+// --------------------------------------------------------------------------
 // Self test of this class
 
 void
@@ -59,7 +93,16 @@ kdt_node_test (bool verbose) {
     printf (" * kdt_node: ");
     //  @selftest
     kdt_node_t *node = kdt_node_new();
+    kdt_node_t *node_left = kdt_node_new();
+    kdt_node_t *node_right = kdt_node_new();
+    kdt_node_set_left (node, node_left);
+    kdt_node_set_right (node, node_right);
+    assert ( kdt_node_left (node) == node_left );
+    assert ( kdt_node_right (node) == node_right );
     kdt_node_destroy (&node);
+    kdt_node_destroy (&node_left);
+    kdt_node_destroy (&node_right);
+
     // @end
     printf ("OK\n");
 }

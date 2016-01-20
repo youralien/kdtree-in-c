@@ -26,6 +26,22 @@ kdt_node_t *
 void
     kdt_node_destroy (kdt_node_t **self_p);
 
+// Get left child
+kdt_node_t *
+    kdt_node_left (kdt_node_t *self);
+
+// Set left child
+void
+    kdt_node_set_left (kdt_node_t *self, kdt_node_t *left);
+
+// Get right child
+kdt_node_t *
+    kdt_node_right (kdt_node_t *self);
+
+// Set right child
+void
+    kdt_node_set_right (kdt_node_t *self, kdt_node_t *right);
+
 //  Self test of this class
 void
     kdt_node_test (bool verbose);
