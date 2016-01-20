@@ -51,7 +51,7 @@ kdt_kdtree_destroy (kdt_kdtree_t **self_p) {
 // --------------------------------------------------------------------------
 // dimension getter
 
-int
+const int
 kdt_kdtree_dimension (kdt_kdtree_t *self) {
     assert (self);
     return self->dimension;

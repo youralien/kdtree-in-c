@@ -31,7 +31,7 @@ void
     kdt_kdtree_set_dimension (kdt_kdtree_t *self, const int dimension);
 
 //  Get dimension of kdtree
-int
+const int
     kdt_kdtree_dimension (kdt_kdtree_t *self);
 
 //  Self test of this class
