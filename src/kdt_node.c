@@ -24,8 +24,8 @@
 struct _kdt_node_t {
     zlist_t *point;
     int value;
-    kdt_node_t *left;
-    kdt_node_t *right;
+    struct _kdt_node_t *left;
+    struct _kdt_node_t *right;
 };
 
 // --------------------------------------------------------------------------
