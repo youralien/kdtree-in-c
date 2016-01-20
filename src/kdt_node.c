@@ -125,6 +125,17 @@ kdt_node_test (bool verbose) {
     printf (" * kdt_node: ");
     //  @selftest
     kdt_node_t *node = kdt_node_new();
+    //  Point (1,1,1)
+    int pointData [3] = {1, 1, 1};
+    zlist_t *point = zlist_new();
+    for (int counter = 0; counter < sizeof(pointData) / sizeof(int); counter++ ) {
+        zlist_append(point, &pointData[counter]);
+    }
+    kdt_node_set_point(node, point);
+    assert ( kdt_node_point (node) == point );
+    //  Value 1
+    kdt_node_set_value(node, 1);
+    assert ( kdt_node_value (node) == 1 );
     kdt_node_t *node_left = kdt_node_new();
     kdt_node_t *node_right = kdt_node_new();
     kdt_node_set_left (node, node_left);
