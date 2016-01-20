@@ -22,13 +22,13 @@
 #include "kdt_classes.h"
 
 struct _kdt_kdtree_t {
-   int filler; // fill in some attributes
+   int dimension;
 };
 
 // --------------------------------------------------------------------------
 // Constructor
 kdt_kdtree_t *
-kdt_kdtree_new (void) { // TODO: pass dimension as argument
+kdt_kdtree_new (void) {
     kdt_kdtree_t *self = (kdt_kdtree_t *) zmalloc (sizeof (kdt_kdtree_t));
     assert (self);
     return self;
@@ -48,6 +48,23 @@ kdt_kdtree_destroy (kdt_kdtree_t **self_p) {
     }
 }
 
+// --------------------------------------------------------------------------
+// dimension getter
+
+int
+kdt_kdtree_dimension (kdt_kdtree_t *self) {
+    assert (self);
+    return self->dimension;
+}
+
+// --------------------------------------------------------------------------
+// dimension setter
+
+void
+kdt_kdtree_set_dimension (kdt_kdtree_t *self, const int dimension) {
+    assert (self);
+    self->dimension = dimension;
+}
 
 // --------------------------------------------------------------------------
 // Self test of this class
@@ -58,6 +75,8 @@ kdt_kdtree_test (bool verbose)
     printf (" * kdt_kdtree: ");
     //  @selftest
     kdt_kdtree_t *kdtree = kdt_kdtree_new ();
+    kdt_kdtree_set_dimension (kdtree, 3);
+    assert ( kdt_kdtree_dimension (kdtree) == 3 );
     kdt_kdtree_destroy (&kdtree);
     //  @end
     printf ("OK\n");
