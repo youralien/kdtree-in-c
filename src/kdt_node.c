@@ -124,6 +124,8 @@ void
 kdt_node_test (bool verbose) {
     printf (" * kdt_node: ");
     //  @selftest
+
+    //  Constructor
     kdt_node_t *node = kdt_node_new();
 
     //  Getter and Setters for Point (1,1,1)
