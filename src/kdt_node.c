@@ -125,7 +125,8 @@ kdt_node_test (bool verbose) {
     printf (" * kdt_node: ");
     //  @selftest
     kdt_node_t *node = kdt_node_new();
-    //  Point (1,1,1)
+
+    //  Getter and Setters for Point (1,1,1)
     int pointData [3] = {1, 1, 1};
     zlist_t *point = zlist_new();
     for (int counter = 0; counter < sizeof(pointData) / sizeof(int); counter++ ) {
@@ -133,15 +134,20 @@ kdt_node_test (bool verbose) {
     }
     kdt_node_set_point(node, point);
     assert ( kdt_node_point (node) == point );
-    //  Value 1
+
+    //  Getter and Setters for Value 1
     kdt_node_set_value(node, 1);
     assert ( kdt_node_value (node) == 1 );
+
+    //  Getter and Setters for Left/Right child
     kdt_node_t *node_left = kdt_node_new();
     kdt_node_t *node_right = kdt_node_new();
     kdt_node_set_left (node, node_left);
     kdt_node_set_right (node, node_right);
     assert ( kdt_node_left (node) == node_left );
     assert ( kdt_node_right (node) == node_right );
+
+    //  Destructors
     kdt_node_destroy (&node);
     kdt_node_destroy (&node_left);
     kdt_node_destroy (&node_right);
