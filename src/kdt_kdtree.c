@@ -1,12 +1,12 @@
 /*  =========================================================================
     kdt_kdtree - kdtree source file
 
-    Copyright (c) the Contributors as noted in the AUTHORS file.       
+    Copyright (c) the Contributors as noted in the AUTHORS file.
     This file is part of the Global Domination Project.
-                                                                       
+
     This Source Code Form is subject to the terms of the Mozilla Public
     License, v. 2.0. If a copy of the MPL was not distributed with this
-    file, You can obtain one at http://mozilla.org/MPL/2.0/.           
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.
     =========================================================================
 */
 
@@ -22,7 +22,7 @@
 #include "kdt_classes.h"
 
 struct _kdt_kdtree_t {
-   int filler; // fill in some attributes 
+   int filler; // fill in some attributes
 };
 
 // --------------------------------------------------------------------------
@@ -45,7 +45,7 @@ kdt_kdtree_destroy (kdt_kdtree_t **self_p) {
         kdt_kdtree_t *self = *self_p;
         free (self);
         *self_p = NULL;
-    }   
+    }
 }
 
 
@@ -57,7 +57,7 @@ kdt_kdtree_test (bool verbose)
 {
     printf (" * kdt_kdtree: ");
     //  @selftest
-    kdt_kdtree_t *kdtree = kdt_kdtree_new (); 
+    kdt_kdtree_t *kdtree = kdt_kdtree_new ();
     kdt_kdtree_destroy (&kdtree);
     //  @end
     printf ("OK\n");
