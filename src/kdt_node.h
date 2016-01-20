@@ -1,5 +1,5 @@
 /*  =========================================================================
-    kdt_classes - private header file
+    kdt_node - node header file
 
     Copyright (c) the Contributors as noted in the AUTHORS file.
     This file is part of the Global Domination Project.
@@ -10,19 +10,29 @@
     =========================================================================
 */
 
-#ifndef KDT_CLASSES_H_INCLUDED
-#define KDT_CLASSES_H_INCLUDED
+#ifndef KDT_NODE_H_INCLUDED
+#define KDT_NODE_H_INCLUDED
 
-// Platform definitions?
-/* #include "platform.h" */
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-// Opaque Class Structures to allow forward references
-typedef struct _kdt_node_t kdt_node_t;
+//  @interface
+//  Create a new ktd_node API
+kdt_node_t *
+    kdt_node_new (void);
 
-// External API
-#include "../include/kdt_library.h"
+//  Destroy a node
+void
+    kdt_node_destroy (kdt_node_t **self_p);
 
-// Internal API
-#include "kdt_node.h"
+//  Self test of this class
+void
+    kdt_node_test (bool verbose);
+//  @end
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
