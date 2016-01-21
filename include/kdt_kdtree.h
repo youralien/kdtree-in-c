@@ -38,6 +38,10 @@ void
 bool
     kdt_kdtree_empty (kdt_kdtree_t *self);
 
+// Insert specified point with associated value
+void
+    kdt_kdtree_insert (kdt_kdtree_t *self, zlist_t *point, float value);
+
 //  Self test of this class
 void
     kdt_kdtree_test (bool verbose);

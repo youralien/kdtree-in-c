@@ -76,6 +76,68 @@ kdt_kdtree_empty (kdt_kdtree_t *self) {
 }
 
 // --------------------------------------------------------------------------
+// Insert specified point with associated value
+void
+kdt_kdtree_insert (kdt_kdtree_t *self, zlist_t *point, float value) {
+    assert (self);
+    // Construct node from point and associate value
+    kdt_node_t *node = kdt_node_new();
+    kdt_node_set_point (node, point);
+    kdt_node_set_value (node, value);
+    // Insert as root if its the first node in the tree
+    if (kdt_kdtree_empty (self)) {
+        self->root = node;
+    }
+    // Insert as left or right child
+    // depending on the level we are comparing
+    // and the value of the dimension for that level
+    else {
+        int dimension = kdt_kdtree_dimension (self);
+        int level_counter = 0;
+        kdt_node_t *head = self->root;
+        while (true) {
+            // Determine which dimension we will be doing comparisons
+            int dim_to_focus = level_counter % dimension;
+
+            zlist_t *head_point = kdt_node_point (head);
+
+            // Get components to compare, using dim_to_focus to index
+            float *head_point_component_p = zlist_first(head_point);
+            float *point_component_p = zlist_first(point);
+            if (dim_to_focus > 0) {
+                for (int counter = 0; counter < dim_to_focus; counter++) {
+                    head_point_component_p = zlist_next(head_point);
+                    point_component_p = zlist_next(point);
+                }
+            }
+
+            // store old parent
+            kdt_node_t *parent = head;
+            // <= is arbitrary; so equal values will just be stored as left child
+            if ( *point_component_p <= *head_point_component_p ) {
+                // traverse to left child
+                head = kdt_node_left(parent);
+                if (!head) {
+                    kdt_node_set_left (parent, node);
+                    break;
+                }
+            }
+            else {
+                // traverse to right child
+                head = kdt_node_right(parent);
+                if (!head) {
+                    kdt_node_set_right (parent, node);
+                    break;
+                }
+            }
+
+            // increment level counter as we are focusing on the next level
+            level_counter++;
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
 // Self test of this class
 
 void
@@ -93,6 +155,58 @@ kdt_kdtree_test (bool verbose)
 
     //  Is tree empty as initialization?
     assert ( kdt_kdtree_empty (kdtree) );
+
+    // Inserting a single element at the root works?
+    // ---------------------------------------------
+    // Point
+    float pointData [3] = {1.0, 1.0, 1.0};
+    zlist_t *point = zlist_new();
+    for (int counter = 0; counter < sizeof(pointData) / sizeof(float); counter++ ) {
+        zlist_append(point, &pointData[counter]);
+    }
+    // Value
+    float value = 1.0;
+    // Insert
+    kdt_kdtree_insert (kdtree, point, value);
+    // Should be non empty
+    assert ( !kdt_kdtree_empty (kdtree) );
+    // Root should contain node with point (1.0, 1.0, 1.0) and value (1.0)
+    assert ( kdt_node_point (kdtree->root) == point );
+    assert ( kdt_node_value (kdtree->root) == value );
+
+    // Inserting what should be a left child
+    // -------------------------------------
+    // Point
+    float pointDataLeft [3] = {-1.0, 1.0, 1.0};
+    zlist_t *point_left = zlist_new ();
+    for (int counter = 0; counter < sizeof(pointDataLeft) / sizeof(float); counter++ ) {
+        zlist_append(point_left, &pointDataLeft[counter]);
+    }
+    // Value
+    float value_left = 0.0;
+    // Insert
+    kdt_kdtree_insert (kdtree, point_left, value_left);
+    // Left Child of Root should be our point
+    assert ( kdt_node_point (kdt_node_left (kdtree->root)) == point_left );
+    assert ( kdt_node_value (kdt_node_left (kdtree->root)) == value_left );
+    // Right child should be null
+    assert ( !kdt_node_right (kdtree->root) );
+
+    // Inserting what should be a left child (level1) right child (level2)
+    // -------------------------------------
+    // Point
+    float pointDataLeftRight [3] = {-1.0, 2.5, 1.0};
+    zlist_t *point_leftright = zlist_new ();
+    for (int counter = 0; counter < sizeof(pointDataLeftRight) / sizeof(float); counter++ ) {
+        zlist_append(point_leftright, &pointDataLeftRight[counter]);
+    }
+    // Value
+    float value_leftright = 0.0;
+    // Insert
+    kdt_kdtree_insert (kdtree, point_leftright, value_leftright);
+    // Right Child of Left Child of Root should be our point
+    assert ( kdt_node_point (kdt_node_right (kdt_node_left (kdtree->root))) == point_leftright );
+    assert ( kdt_node_value (kdt_node_right (kdt_node_left (kdtree->root))) == value_leftright );
 
     //  Destructors
     kdt_kdtree_destroy (&kdtree);
