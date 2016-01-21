@@ -35,12 +35,12 @@ void
     kdt_node_set_point (kdt_node_t *self, zlist_t *point);
 
 // Get value
-const int
+const float
     kdt_node_value (kdt_node_t *self);
 
 // Set value
 void
-    kdt_node_set_value (kdt_node_t *self, const int value);
+    kdt_node_set_value (kdt_node_t *self, const float value);
 
 // Get left child
 kdt_node_t *

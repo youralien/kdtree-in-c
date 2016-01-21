@@ -61,6 +61,10 @@ kdt_node_point (kdt_node_t *self) {
 
 // --------------------------------------------------------------------------
 // Set point
+// NOTE: we use zlist for the point because
+// 1) we don't care about the length of the list.
+// this allows us to insert points of any dimension to the node
+// yes, it can get irritating to access indexes
 void
 kdt_node_set_point (kdt_node_t *self, zlist_t *point) {
     assert (self);
@@ -69,7 +73,7 @@ kdt_node_set_point (kdt_node_t *self, zlist_t *point) {
 
 // --------------------------------------------------------------------------
 // Get value
-const int
+const float
 kdt_node_value (kdt_node_t *self) {
     assert (self);
     return self->value;
@@ -78,7 +82,7 @@ kdt_node_value (kdt_node_t *self) {
 // --------------------------------------------------------------------------
 // Set value
 void
-kdt_node_set_value (kdt_node_t *self, const int value) {
+kdt_node_set_value (kdt_node_t *self, const float value) {
     assert (self);
     self->value = value;
 }
@@ -138,8 +142,8 @@ kdt_node_test (bool verbose) {
     assert ( kdt_node_point (node) == point );
 
     //  Getter and Setters for Value 1
-    kdt_node_set_value(node, 1);
-    assert ( kdt_node_value (node) == 1 );
+    kdt_node_set_value(node, 1.0);
+    assert ( kdt_node_value (node) == 1.0 );
 
     //  Getter and Setters for Left/Right child
     kdt_node_t *node_left = kdt_node_new();
