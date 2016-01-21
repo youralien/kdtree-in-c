@@ -133,7 +133,7 @@ kdt_node_test (bool verbose) {
     kdt_node_t *node = kdt_node_new();
 
     //  Getter and Setters for Point (1,1,1)
-    int pointData [3] = {1, 1, 1};
+    int pointData [3] = {1.0, 1.0, 1.0};
     zlist_t *point = zlist_new();
     for (int counter = 0; counter < sizeof(pointData) / sizeof(int); counter++ ) {
         zlist_append(point, &pointData[counter]);
