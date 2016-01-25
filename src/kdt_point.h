@@ -38,6 +38,9 @@ void *
 float
     kdt_point_index_float (kdt_point_t *self, int index);
 
+bool
+    kdt_point_equal_float (kdt_point_t *A, kdt_point_t *B);
+
 //  Self test of this class
 void
     kdt_point_test (bool verbose);

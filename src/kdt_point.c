@@ -76,6 +76,19 @@ kdt_point_index_float (kdt_point_t *self, int index) {
     return *float_value_p;
 }
 
+bool
+kdt_point_equal_float (kdt_point_t *A, kdt_point_t *B) {
+    int n_components_A = zlist_size (A->list);
+    int n_components_B = zlist_size (B->list);
+    assert (n_components_A == n_components_B);
+    bool still_equal = true;
+    for (int counter = 0; counter < n_components_A; counter++) {
+        still_equal = ( kdt_point_index_float (A, counter) == kdt_point_index_float (B, counter) );
+        if (!still_equal)
+            break;
+    }
+    return still_equal;
+}
 // --------------------------------------------------------------------------
 // Self test of this class
 
@@ -101,6 +114,21 @@ kdt_point_test (bool verbose) {
     assert (kdt_point_index_float (point1, 1) == two);
     assert (kdt_point_index_float (point1, 2) == four);
     assert (kdt_point_index_float (point1, 3) == eight);
+
+    // Populate2
+    kdt_point_t *point2 = kdt_point_new ();
+    kdt_point_populate_with_float (point2, pointData1, size);
+
+    // Yes Equality
+    assert ( kdt_point_equal_float (point1, point2) );
+
+    // Populate3
+    kdt_point_t *point3 = kdt_point_new ();
+    float pointData3[4] = {0.0, 0.0, 0.0, 0.0};
+    kdt_point_populate_with_float (point3, pointData3, size);
+
+    // No Equality
+    assert ( !kdt_point_equal_float (point1, point3) );
 
     // Destructor
     kdt_point_destroy (&point1);
