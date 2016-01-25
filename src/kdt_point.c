@@ -70,9 +70,10 @@ kdt_point_index (kdt_point_t *self, int index) {
 
 // --------------------------------------------------------------------------
 // access the elemnt of the point at index (where the element is a float)
-float *
+float
 kdt_point_index_float (kdt_point_t *self, int index) {
-    return kdt_point_index (self, index);
+    float *float_value_p = kdt_point_index (self, index);
+    return *float_value_p;
 }
 
 // --------------------------------------------------------------------------
@@ -96,10 +97,10 @@ kdt_point_test (bool verbose) {
     float two = 2.0;
     float four = 4.0;
     float eight = 8.0;
-    assert (*kdt_point_index_float (point1, 0) == one);
-    assert (*kdt_point_index_float (point1, 1) == two);
-    assert (*kdt_point_index_float (point1, 2) == four);
-    assert (*kdt_point_index_float (point1, 3) == eight);
+    assert (kdt_point_index_float (point1, 0) == one);
+    assert (kdt_point_index_float (point1, 1) == two);
+    assert (kdt_point_index_float (point1, 2) == four);
+    assert (kdt_point_index_float (point1, 3) == eight);
 
     // Destructor
     kdt_point_destroy (&point1);

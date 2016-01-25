@@ -35,7 +35,7 @@ void *
     kdt_point_index (kdt_point_t *self, int index);
 
 // access the elemnt of the point at index (where the element is a float)
-float *
+float
     kdt_point_index_float (kdt_point_t *self, int index);
 
 //  Self test of this class

@@ -102,13 +102,13 @@ kdt_kdtree_insert (kdt_kdtree_t *self, kdt_point_t *point, float value) {
             kdt_point_t *head_point = kdt_node_point (head);
 
             // Get components to compare, using dim_to_focus to index
-            float *head_point_component_p = kdt_point_index_float (head_point, dim_to_focus);
-            float *point_component_p = kdt_point_index_float (point, dim_to_focus);
+            float head_point_component = kdt_point_index_float (head_point, dim_to_focus);
+            float point_component = kdt_point_index_float (point, dim_to_focus);
 
             // store old parent
             kdt_node_t *parent = head;
             // <= is arbitrary; so equal values will just be stored as left child
-            if ( *point_component_p <= *head_point_component_p ) {
+            if ( point_component <= head_point_component ) {
                 // traverse to left child
                 head = kdt_node_left(parent);
                 if (!head) {
