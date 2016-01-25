@@ -17,6 +17,7 @@ main (void)
 {
     kdt_kdtree_test (false);
     kdt_node_test (false);
+    kdt_point_test (false);
     return 0;
 }
 

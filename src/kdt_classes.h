@@ -15,11 +15,14 @@
 
 // Opaque Class Structures to allow forward references
 typedef struct _kdt_node_t kdt_node_t;
+typedef struct _kdt_point_t kdt_point_t;
 
 // External API
 #include "../include/kdt_library.h"
 
 // Internal API
 #include "kdt_node.h"
+#include "kdt_point.h"
+
 
 #endif
