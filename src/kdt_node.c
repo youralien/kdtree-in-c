@@ -22,7 +22,7 @@
 #include "kdt_classes.h"
 
 struct _kdt_node_t {
-    zlist_t *point;
+    kdt_point_t *point;
     int value;
     struct _kdt_node_t *left;
     struct _kdt_node_t *right;
@@ -53,7 +53,7 @@ kdt_node_destroy (kdt_node_t **self_p) {
 
 // --------------------------------------------------------------------------
 // Get point
-zlist_t *
+kdt_point_t *
 kdt_node_point (kdt_node_t *self) {
     assert (self);
     return self->point;
@@ -61,12 +61,8 @@ kdt_node_point (kdt_node_t *self) {
 
 // --------------------------------------------------------------------------
 // Set point
-// NOTE: we use zlist for the point because
-// 1) we don't care about the length of the list.
-// this allows us to insert points of any dimension to the node
-// yes, it can get irritating to access indexes
 void
-kdt_node_set_point (kdt_node_t *self, zlist_t *point) {
+kdt_node_set_point (kdt_node_t *self, kdt_point_t *point) {
     assert (self);
     self->point = point;
 }
@@ -133,11 +129,9 @@ kdt_node_test (bool verbose) {
     kdt_node_t *node = kdt_node_new();
 
     //  Getter and Setters for Point (1,1,1)
-    int pointData [3] = {1.0, 1.0, 1.0};
-    zlist_t *point = zlist_new();
-    for (int counter = 0; counter < sizeof(pointData) / sizeof(int); counter++ ) {
-        zlist_append(point, &pointData[counter]);
-    }
+    kdt_point_t *point = kdt_point_new ();
+    float pointData [3] = {1.0, 1.0, 1.0};
+    kdt_point_populate_with_float (point, pointData, 3);
     kdt_node_set_point(node, point);
     assert ( kdt_node_point (node) == point );
 

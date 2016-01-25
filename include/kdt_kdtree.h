@@ -40,7 +40,7 @@ bool
 
 // Insert specified point with associated value
 void
-    kdt_kdtree_insert (kdt_kdtree_t *self, zlist_t *point, float value);
+    kdt_kdtree_insert (kdt_kdtree_t *self, kdt_point_t *point, float value);
 
 //  Self test of this class
 void

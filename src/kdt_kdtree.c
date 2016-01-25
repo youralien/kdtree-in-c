@@ -78,7 +78,7 @@ kdt_kdtree_empty (kdt_kdtree_t *self) {
 // --------------------------------------------------------------------------
 // Insert specified point with associated value
 void
-kdt_kdtree_insert (kdt_kdtree_t *self, zlist_t *point, float value) {
+kdt_kdtree_insert (kdt_kdtree_t *self, kdt_point_t *point, float value) {
     assert (self);
     // Construct node from point and associate value
     kdt_node_t *node = kdt_node_new();
@@ -99,17 +99,11 @@ kdt_kdtree_insert (kdt_kdtree_t *self, zlist_t *point, float value) {
             // Determine which dimension we will be doing comparisons
             int dim_to_focus = level_counter % dimension;
 
-            zlist_t *head_point = kdt_node_point (head);
+            kdt_point_t *head_point = kdt_node_point (head);
 
             // Get components to compare, using dim_to_focus to index
-            float *head_point_component_p = zlist_first(head_point);
-            float *point_component_p = zlist_first(point);
-            if (dim_to_focus > 0) {
-                for (int counter = 0; counter < dim_to_focus; counter++) {
-                    head_point_component_p = zlist_next(head_point);
-                    point_component_p = zlist_next(point);
-                }
-            }
+            float *head_point_component_p = kdt_point_index_float (head_point, dim_to_focus);
+            float *point_component_p = kdt_point_index_float (point, dim_to_focus);
 
             // store old parent
             kdt_node_t *parent = head;
@@ -159,11 +153,9 @@ kdt_kdtree_test (bool verbose)
     // Inserting a single element at the root works?
     // ---------------------------------------------
     // Point
+    kdt_point_t *point = kdt_point_new ();
     float pointData [3] = {1.0, 1.0, 1.0};
-    zlist_t *point = zlist_new();
-    for (int counter = 0; counter < sizeof(pointData) / sizeof(float); counter++ ) {
-        zlist_append(point, &pointData[counter]);
-    }
+    kdt_point_populate_with_float (point, pointData, 3);
     // Value
     float value = 1.0;
     // Insert
@@ -177,11 +169,9 @@ kdt_kdtree_test (bool verbose)
     // Inserting what should be a left child
     // -------------------------------------
     // Point
+    kdt_point_t *point_left = kdt_point_new ();
     float pointDataLeft [3] = {-1.0, 1.0, 1.0};
-    zlist_t *point_left = zlist_new ();
-    for (int counter = 0; counter < sizeof(pointDataLeft) / sizeof(float); counter++ ) {
-        zlist_append(point_left, &pointDataLeft[counter]);
-    }
+    kdt_point_populate_with_float (point_left, pointDataLeft, 3);
     // Value
     float value_left = 0.0;
     // Insert
@@ -195,11 +185,9 @@ kdt_kdtree_test (bool verbose)
     // Inserting what should be a left child (level1) right child (level2)
     // -------------------------------------
     // Point
+    kdt_point_t *point_leftright = kdt_point_new ();
     float pointDataLeftRight [3] = {-1.0, 2.5, 1.0};
-    zlist_t *point_leftright = zlist_new ();
-    for (int counter = 0; counter < sizeof(pointDataLeftRight) / sizeof(float); counter++ ) {
-        zlist_append(point_leftright, &pointDataLeftRight[counter]);
-    }
+    kdt_point_populate_with_float (point_leftright, pointDataLeftRight, 3);
     // Value
     float value_leftright = 0.0;
     // Insert

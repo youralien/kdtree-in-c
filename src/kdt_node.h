@@ -27,12 +27,12 @@ void
     kdt_node_destroy (kdt_node_t **self_p);
 
 // Get point
-zlist_t *
+kdt_point_t *
     kdt_node_point (kdt_node_t *self);
 
 // Set point
 void
-    kdt_node_set_point (kdt_node_t *self, zlist_t *point);
+    kdt_node_set_point (kdt_node_t *self, kdt_point_t *point);
 
 // Get value
 const float
