@@ -132,6 +132,66 @@ kdt_kdtree_insert (kdt_kdtree_t *self, kdt_point_t *point, float value) {
 }
 
 // --------------------------------------------------------------------------
+// find a particular node by returning its pointer (helper function)
+kdt_node_t *
+kdt_kdtree_find_node (kdt_kdtree_t *self, kdt_point_t *point) {
+    assert (self);
+    // if tree is empty, no nodes will be found
+    if (kdt_kdtree_empty (self)) {
+        return NULL;
+    }
+    else {
+        int dimension = kdt_kdtree_dimension (self);
+        int level_counter = 0;
+        kdt_node_t *head = self->root;
+        while (true) {
+            int dim_to_focus = level_counter % dimension;
+
+            kdt_point_t *head_point = kdt_node_point (head);
+
+            float head_point_component = kdt_point_index_float (head_point, dim_to_focus);
+            float point_component = kdt_point_index_float (point, dim_to_focus);
+
+            if (point_component == head_point_component) {
+                if (kdt_point_equal_float (point, head_point)) {
+                    return head;
+                }
+                // traverse to left child
+                head = kdt_node_left (head);
+                // if leaf is finally empty, we never found it
+                if (!head) {
+                    return NULL;
+                }
+            }
+            else if (point_component < head_point_component) {
+                // traverse to left child
+                head = kdt_node_left (head);
+                // if leaf is finally empty, we never found it
+                if (!head) {
+                    return NULL;
+                }
+            }
+            else {
+                // traverse to right child
+                head = kdt_node_right (head);
+                // if leaf is finally empty, we never found it
+                if (!head) {
+                    return NULL;
+                }
+            }
+            level_counter++;
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
+// Point contained in kdtree
+bool
+kdt_kdtree_contains (kdt_kdtree_t *self, kdt_point_t *point) {
+    return (kdt_kdtree_find_node (self, point) != NULL);
+}
+
+// --------------------------------------------------------------------------
 // Self test of this class
 
 void
@@ -183,7 +243,7 @@ kdt_kdtree_test (bool verbose)
     assert ( !kdt_node_right (kdtree->root) );
 
     // Inserting what should be a left child (level1) right child (level2)
-    // -------------------------------------
+    // -------------------------------------------------------------------
     // Point
     kdt_point_t *point_leftright = kdt_point_new ();
     float pointDataLeftRight [3] = {-1.0, 2.5, 1.0};
@@ -195,6 +255,17 @@ kdt_kdtree_test (bool verbose)
     // Right Child of Left Child of Root should be our point
     assert ( kdt_node_point (kdt_node_right (kdt_node_left (kdtree->root))) == point_leftright );
     assert ( kdt_node_value (kdt_node_right (kdt_node_left (kdtree->root))) == value_leftright );
+
+    // Contains
+    assert ( kdt_kdtree_contains (kdtree, point) );
+    assert ( kdt_kdtree_contains (kdtree, point_left) );
+    assert ( kdt_kdtree_contains (kdtree, point_leftright) );
+
+    // Does not contain
+    kdt_point_t *point_not_in = kdt_point_new ();
+    float pointNotInData[3] = {-10.0, -10.0, -10.0};
+    kdt_point_populate_with_float (point_not_in, pointNotInData, 3);
+    assert ( !kdt_kdtree_contains (kdtree, point_not_in) );
 
     //  Destructors
     kdt_kdtree_destroy (&kdtree);

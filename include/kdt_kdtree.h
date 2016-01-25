@@ -42,6 +42,14 @@ bool
 void
     kdt_kdtree_insert (kdt_kdtree_t *self, kdt_point_t *point, float value);
 
+// find a particular node by returning its pointer (helper function)
+kdt_node_t *
+    kdt_kdtree_find_node (kdt_kdtree_t *self, kdt_point_t *point);
+
+// Point contained in kdtree
+bool
+    kdt_kdtree_contains (kdt_kdtree_t *self, kdt_point_t *point);
+
 //  Self test of this class
 void
     kdt_kdtree_test (bool verbose);
